@@ -1,0 +1,54 @@
+﻿@page "/"
+@using CodeforcesResults.Services
+@inject ContestWatcherService ContestWatcherService
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+@{
+    var resultTable = ContestWatcherService.ResultTable;
+    var table = ContestWatcherService.Table;
+    var ids = ContestWatcherService.Ids;
+    if (resultTable != null)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nikname</th>
+                    @{
+                        foreach (var id in ids)
+                        {
+                            <th style="background: red">@id</th>
+                        }
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var r in ContestWatcherService.ResultTable)
+                    {
+                        var handle = r.Key;
+                        var resPoints = r.Value;
+                        <tr>
+                            <td>@handle</td>
+                            @{
+                                foreach (var ind in ids)
+                                {
+                                    var hp = table[handle].ContainsKey(ind)
+                                        ? table[handle][ind].Count()
+                                        : 0;
+                                    <td>@hp</td>
+                                }
+                            }
+                            <td style="background: green">@resPoints</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div>Nothing to show</div>
+    }
+}

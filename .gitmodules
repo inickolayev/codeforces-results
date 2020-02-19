@@ -1,0 +1,3 @@
+[submodule "libs/codeforces-api"]
+	path = libs/codeforces-api
+	url = ../codeforces-api.git
